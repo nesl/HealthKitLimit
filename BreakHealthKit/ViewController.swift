@@ -149,28 +149,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func storeHRData() {
+        var samples = [HKQuantitySample]()
         for i in 0 ..< batchSize {
-            var samples = [HKQuantitySample]()
-            for _ in 0 ..< 5 {
-                let beatsCountUnit = HKUnit.count()
-                let numBeats = 50.0 + Double(i) / 10.0
-                let heartRateQuantity = HKQuantity(unit: beatsCountUnit.unitDivided(by: HKUnit.minute()), doubleValue:numBeats)
-                let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-                let startDate = Date()
-                let endDate = startDate
-                let heartRateSample = HKQuantitySample(type: heartRateType, quantity: heartRateQuantity, start: startDate, end: endDate)
-                samples.append(heartRateSample)
+            let beatsCountUnit = HKUnit.count()
+            let numBeats = 50.0 + Double(i) / 10.0
+            let heartRateQuantity = HKQuantity(unit: beatsCountUnit.unitDivided(by: HKUnit.minute()), doubleValue:numBeats)
+            let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+            let startDate = Date()
+            let endDate = startDate
+            let heartRateSample = HKQuantitySample(type: heartRateType, quantity: heartRateQuantity, start: startDate, end: endDate)
+            samples.append(heartRateSample)
+        }
+        healthKitStore.save(samples) { (success: Bool, error: Error?) in
+            if success {
+                self.numProcessedPoints += self.batchSize
             }
-            healthKitStore.save(samples) { (success: Bool, error: Error?) in
-                if success {
-                    self.numProcessedPoints += 1
-                }
-                else {
-                    self.lastErrorMsg = error!.localizedDescription
-                    self.numFailedPoints += 1
-                }
+            else {
+                self.lastErrorMsg = error!.localizedDescription
+                self.numFailedPoints += self.batchSize
             }
         }
+
         numFinishedBatches += 1
         if numFinishedBatches == numBatches {
             hkTimer!.invalidate()

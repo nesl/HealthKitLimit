@@ -4,7 +4,7 @@ Our app generates fake heart rate samples and store back to *HKHealthStore*. The
 
 #### Result
 
-On iPhone 5s, we can insert around 330 data samples per second.
+On iPhone 5s, we can insert around 1030 data samples per second.
 
 #### Warning
 
