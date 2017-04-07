@@ -115,7 +115,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="(figureing...)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDj-pv-geQ">
-                                <rect key="frame" x="16" y="464" width="288" height="21"/>
+                                <rect key="frame" x="16" y="454" width="288" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -129,12 +129,20 @@
                                     <action selector="getTotalNumSamples:" destination="BYZ-38-t0r" eventType="touchDown" id="k9c-x1-VcW"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Free disk: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soE-a6-BDq">
+                                <rect key="frame" x="16" y="474" width="288" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="labelElaspedTime" destination="spE-rv-dHP" id="JNH-w9-CP7"/>
                         <outlet property="labelErrorMsg" destination="w1d-iQ-ynQ" id="psJ-HR-Dsj"/>
+                        <outlet property="labelFreeDisk" destination="soE-a6-BDq" id="QLs-yH-fvm"/>
                         <outlet property="labelGoodFreq" destination="vnw-KR-Sfo" id="nGb-GU-iXD"/>
                         <outlet property="labelNumBadSamples" destination="uj3-FX-jCM" id="rqF-9c-pWS"/>
                         <outlet property="labelNumGoodSamples" destination="KSq-Bo-gHm" id="K54-0q-4CK"/>

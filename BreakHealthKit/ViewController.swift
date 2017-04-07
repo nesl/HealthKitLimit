@@ -19,11 +19,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var labelGoodFreq: UILabel!
     @IBOutlet weak var labelErrorMsg: UILabel!
     @IBOutlet weak var labelTotalNumDataPoints: UILabel!
+    @IBOutlet weak var labelFreeDisk: UILabel!
     
     
     let healthKitStore:HKHealthStore = HKHealthStore()
     
-    let freqChoices = [1, 10, 100, 1000, 10000]
+    let freqChoices = [1, 10, 100, 1000, 10000, 100000]
     let durationChoices = [1, 2, 5, 10, 30]
     var allChoices = [[String]]()
     
@@ -124,6 +125,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         healthKitStore.execute(heartRateQuery)
+        showFreeSpace()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -189,6 +191,30 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             uiTimer?.invalidate()
             getTotalNumSamples(self)
         }
+    }
+    
+    func deviceRemainingFreeSpaceInBytes() -> Int64? {
+        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last!
+        guard
+            let systemAttributes = try? FileManager.default.attributesOfFileSystem(forPath: documentDirectory),
+            let freeSize = systemAttributes[.systemFreeSize] as? NSNumber
+            else {
+                // something failed
+                return nil
+        }
+        return freeSize.int64Value
+    }
+    
+    func showFreeSpace() {
+        if let bytes = deviceRemainingFreeSpaceInBytes() {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = NumberFormatter.Style.decimal
+            let commaStr = numberFormatter.string(from: NSNumber(value: bytes))!
+            labelFreeDisk.text = "Free space: " + commaStr
+        } else {
+            labelFreeDisk.text = "Free space cannot be fetched"
+        }
+        
     }
 }
 
